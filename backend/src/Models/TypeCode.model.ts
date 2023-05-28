@@ -1,9 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { AddressToTypeCodeModel } from './addressToTypeCode.model';
 
 @Entity('tb_typeAssociation')
-export class TypeAssociation {
+export class TypeAssociationModel {
   @PrimaryGeneratedColumn('increment')
-  id: number;
+  id: string;
   @Column()
   typeCode: string;
+
+  @ManyToMany(
+    () => AddressToTypeCodeModel,
+    (addressTypeCode) => addressTypeCode.typeCode,
+  )
+  addressTypeCode: string;
 }

@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
-import { TypeAssociation } from './TypeCode.model';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { AddressToTypeCodeModel } from './addressToTypeCode.model';
 
 @Entity('tb_address')
 export class AddressModel {
   @PrimaryGeneratedColumn('uuid')
-  addressID: number;
+  addressID: string;
 
   @Column()
   city: string;
@@ -18,9 +18,9 @@ export class AddressModel {
   @Column()
   cep: string;
 
-  @OneToOne(() => TypeAssociation)
-  typeAssociation: TypeAssociation;
-
-  @Column()
-  associationID: number;
+  @ManyToMany(
+    () => AddressToTypeCodeModel,
+    (addressType) => addressType.address,
+  )
+  addressTypeCode: string;
 }

@@ -3,8 +3,10 @@ import { DataSource } from 'typeorm';
 import { AddressModel } from '../Models/address.model';
 import { StoreModel } from '../Models/store.model';
 import { Injectable } from '@nestjs/common';
-import { TypeAssociation } from 'src/Models/TypeCode.model';
+import { TypeAssociationModel } from 'src/Models/TypeCode.model';
 import { ConfigService } from '@nestjs/config';
+import { AddressToTypeCodeModel } from 'src/Models/addressToTypeCode.model';
+import { UserModel } from 'src/Models/user.model';
 
 @Injectable()
 export class Database {
@@ -18,8 +20,14 @@ export class Database {
       username: this.config.get('DB_USERNAME'),
       password: this.config.get<string>('DB_PASSWORD'),
       database: this.config.get('DB_DATABASE'),
-      entities: [TypeAssociation, AddressModel, StoreModel],
-      synchronize: false,
+      entities: [
+        TypeAssociationModel,
+        AddressModel,
+        StoreModel,
+        AddressToTypeCodeModel,
+        UserModel,
+      ],
+      synchronize: true,
       logging: true,
     });
     this.init();
